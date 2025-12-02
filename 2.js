@@ -14,14 +14,14 @@ rl.on('line', (line) => {
     let part2 = 0;
     let regex = RegExp(/^([0-9]+)(\1)(\1)*$/)
     for (let range of inputs) {
-        let ranges = range.split("-")
-        Array.from({ length: (Number(ranges[1]) + 1) - Number(ranges[0]) }, (x, i) => "" + (i + Number(ranges[0]))).forEach((num) => {
-            let match = regex.exec(num);
+        let ranges = range.split("-").map(Number)
+        Array.from({ length: (ranges[1] + 1) - ranges[0] }, (x, i) => (i + ranges[0])).forEach((num) => {
+            let match = regex.exec("" + num);
             if (match) {
                 if (!match[3]) {
-                    part1 += Number(num);
+                    part1 += num;
                 }
-                part2 += Number(num);
+                part2 += num;
             }
         })
     }
