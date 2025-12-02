@@ -6,20 +6,22 @@ const rl = readline.createInterface({
     terminal: false
 });
 
+console.log("Go!")
+
 rl.on('line', (line) => {
     let inputs = line.split(",");
     let part1 = 0;
     let part2 = 0;
+    let regex = RegExp(/^([0-9]+)(\1)(\1)*$/)
     for (let range of inputs) {
         let ranges = range.split("-")
         Array.from({ length: (Number(ranges[1]) + 1) - Number(ranges[0]) }, (x, i) => "" + (i + Number(ranges[0]))).forEach((num) => {
-            let match = /^([0-9]+)(\1)(\1)*$/.exec(num);
+            let match = regex.exec(num);
             if (match) {
                 if (!match[3]) {
                     part1 += Number(num);
                 }
                 part2 += Number(num);
-                return;
             }
         })
     }
