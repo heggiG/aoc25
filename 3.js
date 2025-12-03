@@ -13,7 +13,7 @@ let work = (arr, start, end) => {
     let highest = '';
     let index = 0;
     for (let i = start; i < end; i++) {
-        if (+arr[i] > +highest) {
+        if (arr[i] > highest) {
             highest = arr[i];
             index = i;
         }
