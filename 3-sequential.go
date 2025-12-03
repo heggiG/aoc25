@@ -35,9 +35,10 @@ func work(arr []string, size int) string {
 	var num = ""
 	var index = 0
 	for i := 0; i < size; i++ {
-		end := len(arr) - size + 1
+		end := (len(arr) - size) + i + 1
+		fmt.Println(end)
 		highest := ""
-		for j := index; j < end + 1; j++ {
+		for j := index; j < end; j++ {
 			if (arr[j] > highest) {
 				highest = arr[j]
 				index = j + 1
@@ -48,6 +49,5 @@ func work(arr []string, size int) string {
 		}
 		num += highest
 	}
-	fmt.Println(num)
 	return num
 }
