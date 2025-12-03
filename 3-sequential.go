@@ -4,8 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-	"strconv"
-	"strings"
 )
 
 func main() {
@@ -14,40 +12,31 @@ func main() {
 	sum2 := 0
 	for input.Scan() {
 		line := input.Text()
-		arr := strings.Split(line, "")
-		i, _ := strconv.Atoi(getSum2(arr))
+		arr := []rune(line)
+		i := work(arr, 2)
 		sum1 += i
-		j, _ := strconv.Atoi(getSum12(arr))
+		j := work(arr, 12)
 		sum2 += j
 	}
 	fmt.Println(sum1, sum2)
 }
 
-func getSum2(arr []string) string {
-	return work(arr, 2)
-}
-
-func getSum12(arr []string) string {
-	return work(arr, 12)
-}
-
-func work(arr []string, size int) string {
-	var num = ""
+func work(arr []rune, size int) int {
+	var num int = 0
 	var index = 0
 	for i := 0; i < size; i++ {
 		end := (len(arr) - size) + i + 1
-		fmt.Println(end)
-		highest := ""
+		highest := '0'
 		for j := index; j < end; j++ {
 			if (arr[j] > highest) {
 				highest = arr[j]
 				index = j + 1
 			}
-			if (highest == "9") {
+			if (highest == '9') {
 				break
 			}
 		}
-		num += highest
+		num = num * 10 + int(highest - '0')
 	}
 	return num
 }
