@@ -17,7 +17,7 @@ func main() {
 		if (arr == nil) {
 			arr = make([][]rune, len(line))
 		}
-		toSet := make([]rune, 140)
+		toSet := make([]rune, len(line))
 		for index, runeval := range line {
 			toSet[index] = runeval
 		}
