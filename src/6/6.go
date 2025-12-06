@@ -10,73 +10,72 @@ import (
 
 func main() {
 	input := bufio.NewScanner(os.Stdin)
-	lines := make([]string, 5)
-	cols := make([][]string, 750)
+	lines := [5]string{}
+	cols := make([][]string, 780)
 	exp := regexp.MustCompile(`\s+`)
 	fmt.Println("Go!")
+	l := 0
 	for input.Scan() {
 		line := input.Text()
-		lines = append(lines, line)
+		lines[l] = line
 		split := exp.Split(line, -1)
 		for i, val := range split {
 			if i >= len(cols) {
 				cols = append(cols, []string{})
 			}
-			if val == "*" || val == "+" {
-				cols[i] = append([]string{val}, cols[i]...)
-			} else {
-				cols[i] = append(cols[i], val)
-			}
+			cols[i] = append(cols[i], val)
 		}
+		l++
 	}
-	var sum1 int64 = 0
+	var sum1 int = 0
 	for _, arr := range cols {
-		op := arr[0]
-		var buf int64
-		if op == "+" {
+		op := arr[len(arr)-1]
+		var buf int
+		switch op {
+		case "+":
 			buf = 0
-		} else {
+		case "*":
 			buf = 1
 		}
-		for _, val := range arr[1:] {
-			if op == "+" {
-				val, _ := strconv.ParseInt(val, 0, 64)
+		for _, val := range arr[:len(arr)-1] {
+			switch op {
+			case "+":
+				val, _ := strconv.Atoi(val)
 				buf += val
-			} else {
-				val, _ := strconv.ParseInt(val, 0, 64)
+			case "*":
+				val, _ := strconv.Atoi(val)
 				buf *= val
 			}
 		}
 		sum1 += buf
 	}
-	var sum2 int64 = 0
-	var buf int64 = 0
-	op := ""
+	sum2 := 0
+	buf := 0
+	op := '0'
 	for i := range lines[0] {
 		br := true
-		number := ""
-		for j := 0; j < len(lines)-1; j++ {
+		number := 0
+		for j := range len(lines) - 1 {
 			if lines[j][i] != ' ' {
 				br = false
-				number += string([]rune(lines[j])[i])
+				number *= 10
+				number += int([]rune(lines[j])[i] - '0')
 			}
 		}
 		if lines[len(lines)-1][i] != ' ' {
-			op = string(lines[len(lines)-1][i])
+			op = rune(lines[len(lines)-1][i])
 		}
 		if br && i != len(lines[0])-1 {
 			sum2 += buf
 		} else {
 			switch op {
-			case "+":
-				num, _ := strconv.Atoi(number)
-				buf += int64(num)
-			case "*":
+			case '+':
+				buf += number
+			case '*':
 				if buf == 0 {
 					buf = 1
 				}
-				num, _ := strconv.Atoi(number)
-				buf *= int64(num)
+				buf *= number
 			}
 		}
 		if i == len(lines[0])-1 {
