@@ -62,11 +62,4 @@ rl.on('close', () => {
         }
     }
     console.log(sum, sums[sums.length - 1].reduce((a,b) => a + b))
-
-    // var fs = require('fs');
-
-    // var file = fs.createWriteStream('array.txt');
-    // file.on('error', function (err) { /* error handling */ });
-    // sums.forEach(function (v) { file.write(v.join(',') + '\n'); });
-    // file.end();
 })
