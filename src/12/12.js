@@ -7,10 +7,9 @@ const rl = readline.createInterface({
 });
 
 let reg = new RegExp(/\d\dx.*/)
-let areaReg = new RegExp(/\d\dx\d\d/)
-let tilesReg = new RegExp(/(\d\d ?){6}/g)
 
 let lines = []
+console.log("Go!")
 
 rl.on("line", line => {
     if (reg.exec(line)) {
@@ -31,6 +30,6 @@ rl.on("close", () => {
         }
         
     }
-    console.log(sum)
+    console.log(sum, "Hohoho!")
     
 })
